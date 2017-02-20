@@ -21,11 +21,11 @@
 from .entity import Entity
 
 class Player(Entity):
-    components = [
+    components = {
         'name',
 
         'money',
 
         'iq',
         'energy',
-    ]
+    }

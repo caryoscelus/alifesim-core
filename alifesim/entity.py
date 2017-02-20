@@ -29,6 +29,8 @@ class Entity(object):
             self._components = {}
             return self._components
         if name in self.__class__.components:
+            if name not in components:
+                raise AttributeError('Component is not registered: {}'.format(name))
             if name not in self._components:
                 self._components[name] = components[name]()
             return self._components[name]
@@ -40,14 +42,10 @@ class Entity(object):
             return
         super(Entity, self).__setattr__(name, value)
 
-    def add_components(self, *comps):
+    @classmethod
+    def add_components(cls, *comps):
         """Add components to this entity"""
-        for comp in comps:
-            if comp not in components:
-                raise ComponentNotFound(comp)
-            if comp not in self.components:
-                self.components.append(comp)
-                setattr(self, comp, components[comp]())
+        cls.components.update(comps)
 
 class ComponentNotFound(RuntimeError):
     pass

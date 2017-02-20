@@ -1,6 +1,8 @@
 """Very basic tests like creating Player instance
 """
 
+import pytest
+
 from alifesim.player import *
 from alifesim import name, money, basic_stats
 
@@ -25,3 +27,14 @@ def test_set_stat():
     player = Player()
     player.money = 10
     assert isinstance(player.money, Money)
+
+def test_extend():
+    from alifesim import entity
+    player = Player()
+    with pytest.raises(AttributeError):
+        player.foo
+    Player.add_components('foo')
+    with pytest.raises(AttributeError):
+        player.foo
+    entity.register_component('foo', str)
+    assert player.foo == ''
