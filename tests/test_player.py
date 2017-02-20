@@ -19,3 +19,9 @@ def test_list_stats():
     player = Player()
     player_stats = get_stats(player)
     assert player_stats.keys() == { 'iq', 'energy' }
+
+def test_set_stat():
+    from alifesim.money import Money
+    player = Player()
+    player.money = 10
+    assert isinstance(player.money, Money)

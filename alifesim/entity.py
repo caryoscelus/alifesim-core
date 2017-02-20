@@ -24,8 +24,21 @@ def register_component(name, constructor):
     components[name] = constructor
 
 class Entity(object):
-    def __init__(self):
-        self.components = []
+    def __getattr__(self, name):
+        if name == '_components':
+            self._components = {}
+            return self._components
+        if name in self.__class__.components:
+            if name not in self._components:
+                self._components[name] = components[name]()
+            return self._components[name]
+        raise AttributeError('No such attribute or component: {}'.format(name))
+
+    def __setattr__(self, name, value):
+        if name in self.__class__.components:
+            self._components[name] = components[name](value)
+            return
+        super(Entity, self).__setattr__(name, value)
 
     def add_components(self, *comps):
         """Add components to this entity"""

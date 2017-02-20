@@ -21,13 +21,11 @@
 from .entity import Entity
 
 class Player(Entity):
-    def __init__(self):
-        super(Player, self).__init__()
-        self.add_components(
-            'name',
+    components = [
+        'name',
 
-            'money',
+        'money',
 
-            'iq',
-            'energy',
-        )
+        'iq',
+        'energy',
+    ]
