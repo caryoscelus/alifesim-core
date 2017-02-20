@@ -24,3 +24,15 @@ class Friends(list):
     pass
 
 entity.register_component('friends', Friends)
+
+def make_friends(a, b):
+    if b.name not in a.friends:
+        a.friends.append(b.name)
+    if a.name not in b.friends:
+        b.friends.append(a.name)
+
+def remove_friends(a, b):
+    if b.name in a.friends:
+        a.friends.remove(b.name)
+    if a.name in b.friends:
+        b.friends.remove(a.name)
