@@ -24,5 +24,8 @@ def register_select(target, n):
     global select_target
     select_target = target
 
+def can_select():
+    return select_target is not None
+
 def select(what):
     select_target.append(what)
