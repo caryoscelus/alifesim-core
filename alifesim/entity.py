@@ -23,7 +23,14 @@ components = {}
 def register_component(name, constructor):
     components[name] = constructor
 
+entities = []
+
 class Entity(object):
+    def __new__(cls, *args, **kwargs):
+        instance = super(Entity, cls).__new__(cls, *args, **kwargs)
+        entities.append(instance)
+        return instance
+
     def __getattr__(self, name):
         if name == '_components':
             self._components = {}
@@ -42,10 +49,25 @@ class Entity(object):
             return
         super(Entity, self).__setattr__(name, value)
 
+    def has_components(self, *comps):
+        for comp in comps:
+            if comp not in self.__class__.components:
+                return False
+        return True
+
     @classmethod
     def add_components(cls, *comps):
         """Add components to this entity"""
         cls.components.update(comps)
+
+def entity_processor(*req_comps):
+    def wrapper(f):
+        def _f():
+            for entity in entities:
+                if entity.has_components(*req_comps):
+                    f(entity)
+        return _f
+    return wrapper
 
 class ComponentNotFound(RuntimeError):
     pass

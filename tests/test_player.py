@@ -38,3 +38,17 @@ def test_extend():
         player.foo
     entity.register_component('foo', str)
     assert player.foo == ''
+
+def test_depressed():
+    from alifesim import day
+    from alifesim.entity import entity_processor
+    Player.add_components('happiness')
+    @entity_processor('money', 'happiness')
+    def depressed_without_money(entity):
+        if entity.money < 100500:
+            entity.happiness -= 1
+    day.on_day_end(depressed_without_money)
+    player = Player()
+    assert player.happiness == 0
+    day.next_day()
+    assert player.happiness == -1

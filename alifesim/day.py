@@ -15,13 +15,14 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-from . import stat
+"""Day cycle
+"""
 
-basic_stats = [
-    'iq',
-    'energy',
-    'happiness',
-]
+day_end_processors = []
 
-for s in basic_stats:
-    stat.register_stat(s)
+def next_day():
+    for f in day_end_processors:
+        f()
+
+def on_day_end(f):
+    day_end_processors.append(f)
