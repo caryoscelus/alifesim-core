@@ -24,3 +24,10 @@ class Stat(float):
 
 def register_stat(name):
     entity.register_component(name, Stat)
+
+def get_stats(entity):
+    return {
+        name : getattr(entity, name)
+            for name in entity.components
+                if isinstance(getattr(entity, name), Stat)
+    }
