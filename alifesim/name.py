@@ -21,3 +21,14 @@ class Name(str):
     pass
 
 entity.register_component('name', Name)
+
+def get_by_name(name):
+    named = entity.entity_filter('name')(lambda x: x.name == name)()
+    if len(named) > 1:
+        raise NameLookupError('More than one entity named "{}"'.format(name))
+    if len(named) == 0:
+        raise NameLookupError('No entity named "{}"'.format(name))
+    return named[0]
+
+class NameLookupError(RuntimeError):
+    pass

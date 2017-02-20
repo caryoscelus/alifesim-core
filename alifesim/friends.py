@@ -15,19 +15,12 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-"""Player character entity
+"""Friends component
 """
 
-from .entity import Entity
+from . import entity
 
-class Player(Entity):
-    components = {
-        'name',
+class Friends(list):
+    pass
 
-        'money',
-
-        'iq',
-        'energy',
-
-        'friends',
-    }
+entity.register_component('friends', Friends)

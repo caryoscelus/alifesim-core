@@ -4,7 +4,7 @@
 import pytest
 
 from alifesim.player import *
-from alifesim import name, money, basic_stats
+from alifesim import name, money, basic_stats, friends
 
 def test_new_player():
     player = Player()
@@ -20,7 +20,7 @@ def test_list_stats():
     from alifesim.stat import get_stats
     player = Player()
     player_stats = get_stats(player)
-    assert player_stats.keys() == { 'iq', 'energy' }
+    assert set(player_stats.keys()) == { 'iq', 'energy' }
 
 def test_set_stat():
     from alifesim.money import Money
@@ -52,3 +52,11 @@ def test_depressed():
     assert player.happiness == 0
     day.next_day()
     assert player.happiness == -1
+
+def test_name():
+    from alifesim.name import get_by_name, NameLookupError
+    with pytest.raises(NameLookupError):
+        get_by_name('name')
+    player = Player()
+    player.name = 'Myself'
+    assert get_by_name('Myself') == player

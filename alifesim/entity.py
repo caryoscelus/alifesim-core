@@ -69,5 +69,16 @@ def entity_processor(*req_comps):
         return _f
     return wrapper
 
+def entity_filter(*comps):
+    def wrapper(f):
+        def _f():
+            return [
+                entity
+                    for entity in entities
+                        if entity.has_components(*comps) and f(entity)
+            ]
+        return _f
+    return wrapper
+
 class ComponentNotFound(RuntimeError):
     pass
