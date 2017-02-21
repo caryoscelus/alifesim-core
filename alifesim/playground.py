@@ -31,3 +31,18 @@ def setup_friends(player):
         friend = Person()
         friend.name = name
         make_friends(player, friend)
+
+class EatCake(object):
+    name = "Eat Cake"
+    people_min = 1
+    people_max = 3
+    @classmethod
+    def make_and_run(cls, *people):
+        self = cls(people)
+        self.proceed()
+
+    def __init__(self, *people):
+        self.people = people
+
+    def proceed(self):
+        print("Cake eaten")

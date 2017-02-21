@@ -31,6 +31,7 @@ class Selection(list):
         return self.min <= len(self) <= self.max
 
 selection = None
+selection_processor = None
 
 def new_selection(min_, max_):
     global selection
@@ -42,3 +43,11 @@ def can_select():
 
 def select(what):
     selection.append(what)
+
+def set_selection_processor(f):
+    global selection_processor
+    selection_processor = f
+    # return ??
+
+def process_selection():
+    selection_processor(*selection)
