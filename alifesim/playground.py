@@ -21,6 +21,7 @@
 from .person import Person
 from .friends import make_friends
 from .socialize import Socialize
+from .event import event_tags, event_handler
 from . import ui_helpers
 
 def setup_friends(player):
@@ -34,12 +35,12 @@ def setup_friends(player):
         friend.name = name
         make_friends(player, friend)
 
+@event_tags('eat_cake')
 class EatCake(Socialize):
     name = "Eat Cake"
     people_min = 1
     people_max = 3
 
-    def proceed(self):
-        ## move to event handler
-        ui_helpers.show_screen('cake')
-        super(EatCake, self).proceed()
+@event_handler('eat_cake')
+def eat_cake_screen(event):
+    ui_helpers.show_screen('cake')
