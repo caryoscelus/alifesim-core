@@ -18,14 +18,27 @@
 """Ui helpers
 """
 
-select_target = None
+class Selection(list):
+    def __init__(self, min_, max_):
+        super(Selection, self).__init__()
+        self.min = min_
+        self.max = max_
+    def append(self, element):
+        if len(self) >= self.max:
+            return
+        super(Selection, self).append(element)
+    def ready(self):
+        return self.min <= len(self) <= self.max
 
-def register_select(target, n):
-    global select_target
-    select_target = target
+selection = None
+
+def new_selection(min_, max_):
+    global selection
+    selection = Selection(min_, max_)
+    return selection
 
 def can_select():
-    return select_target is not None
+    return selection is not None
 
 def select(what):
-    select_target.append(what)
+    selection.append(what)
