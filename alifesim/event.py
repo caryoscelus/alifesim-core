@@ -41,7 +41,7 @@ def event_handler(*tags):
     return wrapper
 
 class Event(object):
-    tags = {}
+    tags = set()
     """Event, which processes attached reactors"""
     def proceed(self):
         for handler in event_handlers:
