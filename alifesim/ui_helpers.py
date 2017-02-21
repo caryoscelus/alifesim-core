@@ -51,3 +51,10 @@ def set_selection_processor(f):
 
 def process_selection():
     selection_processor(*selection)
+
+def show_screen(name, *args, **kwargs):
+    """Show given screen with args.
+
+    Currently this function has to be explicitly overridden by UI implementation.
+    """
+    raise RuntimeError('Show screen not provided')

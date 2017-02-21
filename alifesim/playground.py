@@ -20,6 +20,7 @@
 
 from .person import Person
 from .friends import make_friends
+from . import ui_helpers
 
 def setup_friends(player):
     player.name = 'Mee Mines'
@@ -45,4 +46,5 @@ class EatCake(object):
         self.people = people
 
     def proceed(self):
-        print("Cake eaten")
+        ## event?
+        ui_helpers.show_screen('cake')
