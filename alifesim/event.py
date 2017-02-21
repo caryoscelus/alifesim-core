@@ -18,6 +18,8 @@
 """Events & event hadlners
 """
 
+import copy
+
 class EventHandler(object):
     def __init__(self, f, tags):
         self.f = f
@@ -31,8 +33,23 @@ event_handlers = []
 def register_event_handler(f, *tags):
     event_handlers.append(EventHandler(f, tags))
 
+def event_handler(*tags):
+    """Decorator, which registers event handler"""
+    def wrapper(f):
+        register_event_handler(f, *tags)
+        return f
+    return wrapper
+
 class Event(object):
+    tags = {}
     """Event, which processes attached reactors"""
     def proceed(self):
         for handler in event_handlers:
             handler.process(self)
+
+def event_tags(*tags):
+    def wrapper(cls):
+        cls.tags = copy.copy(cls.tags)
+        cls.tags.update(tags)
+        return cls
+    return wrapper
