@@ -23,6 +23,7 @@ from .friends import make_friends
 from .socialize import Socialize
 from .event import event_tags, event_handler
 from . import ui_helpers
+from random import random
 
 def setup_friends(player):
     player.name = 'Mee Mines'
@@ -44,3 +45,9 @@ class EatCake(Socialize):
 @event_handler('eat_cake')
 def eat_cake_screen(event):
     ui_helpers.show_screen('cake')
+
+@event_handler('eat_cake')
+def eat_cake_special(event):
+    print(event.people)
+    if random() < 0.5:
+        ui_helpers.show_screen('cake_special', event.people[0])
