@@ -24,7 +24,7 @@ class Socialize(Activity):
     """Base class for social activities"""
     @classmethod
     def make_and_run(cls, *people):
-        self = cls(people)
+        self = cls(*people)
         self.proceed()
     def __init__(self, *people):
         self.people = people
