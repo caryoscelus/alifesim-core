@@ -27,7 +27,8 @@ from alifesim.name import get_by_name
 def test_pickle_player():
     player = Player()
     player.name = 'Name'
-    sp = pickle.dumps(player)
-    entity.entities.clear()
+    sp = pickle.dumps(player, protocol=pickle.HIGHEST_PROTOCOL)
+    #entity.entities.clear()
+    del entity.entities[:]
     player = pickle.loads(sp)
     assert player == get_by_name('Name')
