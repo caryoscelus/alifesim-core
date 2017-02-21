@@ -15,31 +15,11 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-"""Playground - test-related code
+"""Activities
 """
 
-from .person import Person
-from .friends import make_friends
-from .socialize import Socialize
-from . import ui_helpers
+from .event import Event
 
-def setup_friends(player):
-    player.name = 'Mee Mines'
-    friend_names = [
-        'Frie Ends',
-        'Clou Sefri',
-    ]
-    for name in friend_names:
-        friend = Person()
-        friend.name = name
-        make_friends(player, friend)
-
-class EatCake(Socialize):
-    name = "Eat Cake"
-    people_min = 1
-    people_max = 3
-
-    def proceed(self):
-        ## move to event handler
-        ui_helpers.show_screen('cake')
-        super(EatCake, self).proceed()
+class Activity(Event):
+    """Base class for all activities"""
+    pass

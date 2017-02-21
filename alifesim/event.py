@@ -15,31 +15,24 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-"""Playground - test-related code
+"""Events & event hadlners
 """
 
-from .person import Person
-from .friends import make_friends
-from .socialize import Socialize
-from . import ui_helpers
+class EventHandler(object):
+    def __init__(self, f, tags):
+        self.f = f
+        self.tags = set(tags)
+    def process(self, entity):
+        if entity.tags >= self.tags:
+            self.f(entity)
 
-def setup_friends(player):
-    player.name = 'Mee Mines'
-    friend_names = [
-        'Frie Ends',
-        'Clou Sefri',
-    ]
-    for name in friend_names:
-        friend = Person()
-        friend.name = name
-        make_friends(player, friend)
+event_handlers = []
 
-class EatCake(Socialize):
-    name = "Eat Cake"
-    people_min = 1
-    people_max = 3
+def register_event_handler(f, *tags):
+    event_handlers.append(EventHandler(f, tags))
 
+class Event(object):
+    """Event, which processes attached reactors"""
     def proceed(self):
-        ## move to event handler
-        ui_helpers.show_screen('cake')
-        super(EatCake, self).proceed()
+        for handler in event_handlers:
+            handler.process(self)
