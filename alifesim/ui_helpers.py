@@ -45,6 +45,10 @@ def select(what):
     if what not in selection:
         selection.append(what)
 
+def deselect(what):
+    if what in selection:
+        selection.remove(what)
+
 def set_selection_processor(f):
     global selection_processor
     selection_processor = f
