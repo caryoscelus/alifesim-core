@@ -28,7 +28,6 @@ def test_pickle_player():
     player = Player()
     player.name = 'Name'
     sp = pickle.dumps(player, protocol=pickle.HIGHEST_PROTOCOL)
-    #entity.entities.clear()
-    del entity.entities[:]
+    entity.world.entities = []
     player = pickle.loads(sp)
     assert player == get_by_name('Name')

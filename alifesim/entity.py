@@ -18,17 +18,26 @@
 """Entity
 """
 
-components = {}
+class EntityWorld(object):
+    def __init__(self):
+        self.components = {}
+        self.entities = []
+
+world = EntityWorld()
 
 def register_component(name, constructor):
-    components[name] = constructor
+    world.components[name] = constructor
 
-entities = []
+def component(name):
+    def f(cl):
+        register_component(name, cl)
+        return cl
+    return f
 
 class Entity(object):
     def __new__(cls, *args, **kwargs):
         instance = super(Entity, cls).__new__(cls, *args, **kwargs)
-        entities.append(instance)
+        world.entities.append(instance)
         return instance
 
     def __getattr__(self, name):
@@ -36,16 +45,16 @@ class Entity(object):
             self._components = {}
             return self._components
         if name in self.__class__.components:
-            if name not in components:
+            if name not in world.components:
                 raise AttributeError('Component is not registered: {}'.format(name))
             if name not in self._components:
-                self._components[name] = components[name]()
+                self._components[name] = world.components[name]()
             return self._components[name]
         raise AttributeError('No such attribute or component: {}'.format(name))
 
     def __setattr__(self, name, value):
         if name in self.__class__.components:
-            self._components[name] = components[name](value)
+            self._components[name] = world.components[name](value)
             return
         super(Entity, self).__setattr__(name, value)
 
@@ -63,7 +72,7 @@ class Entity(object):
 def entity_processor(*req_comps):
     def wrapper(f):
         def _f():
-            for entity in entities:
+            for entity in world.entities:
                 if entity.has_components(*req_comps):
                     f(entity)
         return _f
@@ -74,7 +83,7 @@ def entity_filter(*comps):
         def _f():
             return [
                 entity
-                    for entity in entities
+                    for entity in world.entities
                         if entity.has_components(*comps) and f(entity)
             ]
         return _f
