@@ -23,7 +23,13 @@ from .friends import make_friends
 from .socialize import Socialize
 from .event import event_tags, event_handler
 from . import ui_helpers
+from . import entity
 from random import random
+
+@entity.component('satiation')
+class satiation(float):
+    pass
+Person.components.add('satiation')
 
 def setup_friends(player):
     player.name = 'Mee Mines'
@@ -51,3 +57,8 @@ def eat_cake_special(event):
     print(event.people)
     if random() < 0.5:
         ui_helpers.show_screen('cake_special', event.people[0])
+
+@event_handler('eat_cake')
+def eat_cake_satiation(event):
+    for person in event.people:
+        person.satiation += 1
