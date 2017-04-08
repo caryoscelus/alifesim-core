@@ -42,7 +42,8 @@ def can_select():
     return selection is not None
 
 def select(what):
-    selection.append(what)
+    if what not in selection:
+        selection.append(what)
 
 def set_selection_processor(f):
     global selection_processor
