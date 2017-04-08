@@ -15,15 +15,15 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-"""Day cycle
-"""
+"""Date"""
 
-day_end_processors = []
+import datetime
 
-def next_day():
-    for f in day_end_processors:
-        f()
+from . import day
 
-def on_day_end(f):
-    day_end_processors.append(f)
-    return f
+today = None
+
+@day.on_day_end
+def update_date():
+    global today
+    today += datetime.timedelta(1)
