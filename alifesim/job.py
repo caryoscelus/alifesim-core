@@ -21,11 +21,20 @@ from . import name, plan
 from .entity import Entity
 from .plan import WeekTime
 
+@entity.component('payment')
+class Payment(float):
+    pass
+
 class Job(Entity):
     components = {
+        'payment',
         'name',
         'weekly',
     }
+
+@entity.entity_filter('payment')
+def all_jobs(_):
+    return True
 
 def normal_job(name):
     job = Job()

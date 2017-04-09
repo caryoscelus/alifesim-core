@@ -68,3 +68,8 @@ def eat_cake_satiation(event):
 def get_a_job(person):
     ajob = job.normal_job('A boring job')
     person.job = ajob.name
+
+def setup_jobs():
+    job_names = ['Boring Inc', 'Fun LLC']
+    for name in job_names:
+        job.normal_job(name)
