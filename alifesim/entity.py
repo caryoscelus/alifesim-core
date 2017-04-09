@@ -84,7 +84,9 @@ def entity_processor(*req_comps):
     return wrapper
 
 def entity_filter(*comps):
-    def wrapper(f):
+    def wrapper(f=None):
+        if f is None:
+            f = lambda x: True
         def _f():
             return [
                 entity
