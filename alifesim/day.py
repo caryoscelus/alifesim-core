@@ -18,12 +18,13 @@
 """Day cycle
 """
 
-day_end_processors = []
+from . import event
+
+@event.event_tags('day_end')
+class DayEnd(event.Event):
+    pass
 
 def next_day():
-    for f in day_end_processors:
-        f()
+    DayEnd().proceed()
 
-def on_day_end(f):
-    day_end_processors.append(f)
-    return f
+on_day_end = event.event_handler('day_end')

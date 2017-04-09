@@ -44,7 +44,7 @@ def test_depressed():
     from alifesim.entity import entity_processor
     Player.add_components('happiness')
     @entity_processor('money', 'happiness')
-    def depressed_without_money(entity):
+    def depressed_without_money(entity, _):
         if entity.money < 100500:
             entity.happiness -= 1
     day.on_day_end(depressed_without_money)

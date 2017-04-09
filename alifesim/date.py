@@ -24,6 +24,6 @@ from . import day
 today = None
 
 @day.on_day_end
-def update_date():
+def update_date(_):
     global today
     today += datetime.timedelta(1)
