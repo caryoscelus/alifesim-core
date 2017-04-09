@@ -29,5 +29,7 @@ class Player(Entity):
         'iq',
         'energy',
 
+        'job',
         'friends',
+        'items',
     }

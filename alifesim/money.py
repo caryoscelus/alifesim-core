@@ -21,3 +21,11 @@ class Money(float):
     pass
 
 entity.register_component('money', Money)
+
+def can_spend_money(actor, price):
+    return actor.money > price
+
+def spend_money(actor, price, action):
+    if can_spend_money(actor, price):
+        actor.money -= price
+        action()

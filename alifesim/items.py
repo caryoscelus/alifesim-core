@@ -18,16 +18,17 @@
 """Items & price"""
 
 from . import entity
-from . import relations
-from . import name, plan
 from .entity import Entity
-from .plan import WeekTime
 
 @entity.component('price')
 class Price(float):
     pass
 
-class Item(entity.Entity):
+@entity.component('items')
+class Items(list):
+    pass
+
+class Item(Entity):
     components = {
         'name',
         'price',
@@ -38,6 +39,9 @@ def make(name, price):
     item.name = name
     item.price = price
     return item
+
+def give(target, item):
+    target.items.append(item.name)
 
 @entity.entity_filter('price')
 def all(_):

@@ -4,7 +4,7 @@
 import pytest
 
 from alifesim.player import *
-from alifesim import name, money, basic_stats, friends
+from alifesim import name, money, basic_stats, friends, items
 
 def test_new_player():
     player = Player()
