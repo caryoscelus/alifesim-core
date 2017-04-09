@@ -76,10 +76,10 @@ def setup_jobs():
 
 
 def setup_courses():
+    from random import random
     course_names = ['Programming', 'Guitar', 'Sewing', 'Diving']
     for name in course_names:
-        course = courses.Course()
-        course.name = name
+        courses.evening_course(name, int(random()*7))
 
 
 def setup_items():

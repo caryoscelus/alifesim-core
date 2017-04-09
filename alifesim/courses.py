@@ -16,6 +16,7 @@
 ##
 
 from . import entity, relations
+from .plan import WeekTime
 
 @entity.component('course_payment')
 class CoursePayment(float):
@@ -27,6 +28,12 @@ class Course(entity.Entity):
         'name',
         'weekly',
     }
+
+def evening_course(name, day):
+    course = Course()
+    course.name = name
+    course.weekly.add(WeekTime(day, 1))
+    return course
 
 @entity.entity_filter('course_payment')
 def all(_):
