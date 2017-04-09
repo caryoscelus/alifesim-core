@@ -19,6 +19,11 @@
 """
 
 class EntityWorld(object):
+    def __setstate__(self, state):
+        for key in state:
+            setattr(self, key, state[key])
+        global world
+        world = self
     def __init__(self):
         self.components = {}
         self.entities = []
