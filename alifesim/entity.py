@@ -76,10 +76,10 @@ class Entity(object):
 
 def entity_processor(*req_comps):
     def wrapper(f):
-        def _f():
+        def _f(*args, **kwargs):
             for entity in world.entities:
                 if entity.has_components(*req_comps):
-                    f(entity)
+                    f(entity, *args, **kwargs)
         return _f
     return wrapper
 
