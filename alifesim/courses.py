@@ -16,7 +16,7 @@
 ##
 
 from . import entity, relations
-from .plan import WeekTime
+from .date import WeekTime
 
 @entity.component('course_payment')
 class CoursePayment(float):

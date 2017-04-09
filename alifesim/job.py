@@ -19,7 +19,7 @@ from . import entity
 from . import relations
 from . import name, plan
 from .entity import Entity
-from .plan import WeekTime
+from .date import WeekTime
 
 @entity.component('payment')
 class Payment(float):

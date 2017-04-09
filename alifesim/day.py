@@ -24,7 +24,15 @@ from . import event
 class DayEnd(event.Event):
     pass
 
+@event.event_tags('time')
+class TimeTick(event.Event):
+    pass
+
 def next_day():
     DayEnd().proceed()
 
+def tick():
+    TimeTick().proceed()
+
 on_day_end = event.event_handler('day_end')
+on_time_tick = event.event_handler('time')

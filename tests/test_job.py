@@ -21,7 +21,8 @@
 from alifesim.job import normal_job
 from alifesim.person import Person
 from alifesim.relations import related
-from alifesim.plan import get_plan, WeekTime
+from alifesim.plan import get_plan
+from alifesim.date import WeekTime
 
 boring_job = normal_job('A boring job')
 fun_job = normal_job('A fun job')
