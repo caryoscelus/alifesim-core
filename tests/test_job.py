@@ -15,16 +15,22 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-"""Person
+"""Test job
 """
 
-from .entity import Entity
+from alifesim.job import normal_job
+from alifesim.person import Person
+from alifesim.relations import related
 
-class Person(Entity):
-    components = {
-        'name',
+boring_job = normal_job('A boring job')
+fun_job = normal_job('A fun job')
 
-        'job',
-
-        'friends',
-    }
+def test_job_related():
+    person = Person()
+    assert not related(person, boring_job, 'plan')
+    person.job = boring_job.name
+    assert related(person, boring_job, 'plan')
+    assert not related(person, fun_job, 'plan')
+    person.job = fun_job.name
+    assert not related(person, boring_job, 'plan')
+    assert related(person, fun_job, 'plan')

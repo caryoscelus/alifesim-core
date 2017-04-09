@@ -15,16 +15,28 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-"""Person
-"""
+"""Relations between entities"""
 
-from .entity import Entity
+from . import entity
 
-class Person(Entity):
-    components = {
-        'name',
+relation_processors = []
 
-        'job',
+def generic_processor(f):
+    relation_processors.append(f)
+    return f
 
-        'friends',
-    }
+def processor(relation):
+    def decorator(f):
+        def wrap(a, b, rel):
+            if rel != relation:
+                return False
+            return f(a, b)
+        relation_processors.append(wrap)
+        return wrap
+    return decorator
+
+def related(a, b, relation):
+    for processor in relation_processors:
+        if processor(a, b, relation):
+            return True
+    return False

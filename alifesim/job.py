@@ -15,16 +15,30 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-"""Person
-"""
-
+from . import entity
+from . import relations
+from . import name, plan
 from .entity import Entity
+from .plan import WeekTime
 
-class Person(Entity):
+class Job(Entity):
     components = {
         'name',
-
-        'job',
-
-        'friends',
+        'weekly',
     }
+
+def normal_job(name):
+    job = Job()
+    job.name = name
+    job.weekly = {
+        WeekTime(d, 0) for d in range(5)
+    }
+    return job
+
+@entity.component('job')
+class HasJob(str):
+    pass
+
+@relations.processor('plan')
+def job_related(person, job):
+    return person.job == job.name
