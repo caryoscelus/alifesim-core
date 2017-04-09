@@ -23,6 +23,7 @@ from .friends import make_friends
 from .socialize import Socialize
 from .event import event_tags, event_handler
 from . import job
+from . import items
 from . import ui_helpers
 from . import entity
 from random import random
@@ -73,3 +74,8 @@ def setup_jobs():
     job_names = ['Boring Inc', 'Fun LLC']
     for name in job_names:
         job.normal_job(name)
+
+
+def setup_items():
+    items.make('Umbrella', 5)
+    items.make('Cake', 7)
