@@ -22,6 +22,7 @@ from .person import Person
 from .friends import make_friends
 from .socialize import Socialize
 from .event import event_tags, event_handler
+from . import job
 from . import ui_helpers
 from . import entity
 from random import random
@@ -62,3 +63,8 @@ def eat_cake_special(event):
 def eat_cake_satiation(event):
     for person in event.people:
         person.satiation += 1
+
+
+def get_a_job(person):
+    ajob = job.normal_job('A boring job')
+    person.job = ajob.name

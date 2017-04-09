@@ -23,6 +23,7 @@ from . import entity
 from . import relations
 
 class WeekTime(object):
+    DAY_SLOTS = 2
     def __init__(self, weekday=0, slot=0):
         self.weekday = weekday
         self.slot = slot
