@@ -21,6 +21,7 @@
 from alifesim.job import normal_job
 from alifesim.person import Person
 from alifesim.relations import related
+from alifesim.plan import get_plan, WeekTime
 
 boring_job = normal_job('A boring job')
 fun_job = normal_job('A fun job')
@@ -34,3 +35,12 @@ def test_job_related():
     person.job = fun_job.name
     assert not related(person, boring_job, 'plan')
     assert related(person, fun_job, 'plan')
+
+def test_job_weekly():
+    person = Person()
+    person.job = boring_job.name
+    plan = get_plan(person, WeekTime(0, 0))
+    assert boring_job in plan
+    assert fun_job not in plan
+    assert boring_job not in get_plan(person, WeekTime(6, 0))
+    assert boring_job not in get_plan(person, WeekTime(1, 1))

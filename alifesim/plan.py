@@ -26,6 +26,10 @@ class WeekTime(object):
     def __init__(self, weekday=0, slot=0):
         self.weekday = weekday
         self.slot = slot
+    def __eq__(self, other):
+        return self.weekday == other.weekday and self.slot == other.slot
+    def __hash__(self):
+        return hash(self.weekday*256+self.slot)
 
 class RealTime(object):
     def __init__(self, date, slot=0):
@@ -43,7 +47,7 @@ class Weekly(set):
 
 def get_all_weekly_on(person, time):
     wtime = to_week_time(time)
-    return entity.entity_filter('weekly')(lambda x: relations.related(person, x) and wtime in x.weekly)
+    return entity.entity_filter('weekly')(lambda x: relations.related(person, x, 'plan') and wtime in x.weekly)()
 
-def get_plan(time):
-    return get_all_weekly_on(time)
+def get_plan(person, time):
+    return get_all_weekly_on(person, time)
