@@ -15,39 +15,29 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-"""Player character entity
-"""
+from . import entity, relations
 
-from . import entity
-from .entity import Entity
-
-@entity.component('player')
-class PlayerComponent(object):
+@entity.component('course_payment')
+class CoursePayment(float):
     pass
 
-class Player(Entity):
+class Course(entity.Entity):
     components = {
-        'player',
+        'course_payment',
         'name',
-
-        'money',
-
-        'iq',
-        'energy',
-
-        'job',
-        'courses',
-        'friends',
-        'items',
+        'weekly',
     }
 
-class PlayerError(RuntimeError):
+@entity.entity_filter('course_payment')
+def all(_):
+    return True
+
+@entity.component('courses')
+class HasCourses(set):
     pass
 
-def get():
-    all = entity.entity_filter('player')()()
-    if len(all) == 0:
-        raise PlayerError('No player found')
-    elif len(all) > 1:
-        raise PlayerError('More than one player')
-    return all[0]
+@relations.processor('plan')
+def course_related(person, course):
+    if not person.has_components('courses'):
+        return False
+    return course.name in person.courses

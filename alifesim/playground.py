@@ -22,8 +22,7 @@ from .person import Person
 from .friends import make_friends
 from .socialize import Socialize
 from .event import event_tags, event_handler
-from . import job
-from . import items
+from . import job, courses, items
 from . import ui_helpers
 from . import entity
 from random import random
@@ -76,6 +75,13 @@ def setup_jobs():
         job.normal_job(name)
 
 
+def setup_courses():
+    course_names = ['Programming', 'Guitar', 'Sewing', 'Diving']
+    for name in course_names:
+        course = courses.Course()
+        course.name = name
+
+
 def setup_items():
     items.make('Umbrella', 5)
     items.make('Cake', 7)
@@ -86,4 +92,5 @@ def setup_all(player):
     get_a_job(player)
     setup_jobs()
     setup_items()
+    setup_courses()
     player.money = 400
