@@ -79,3 +79,11 @@ def setup_jobs():
 def setup_items():
     items.make('Umbrella', 5)
     items.make('Cake', 7)
+
+
+def setup_all(player):
+    setup_friends(player)
+    get_a_job(player)
+    setup_jobs()
+    setup_items()
+    player.money = 400
