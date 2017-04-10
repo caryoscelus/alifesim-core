@@ -32,7 +32,7 @@ class Course(entity.Entity):
         'event',
     }
 
-@event.tags('course')
+@event.tags('course', 'tick')
 class CourseEvent(Event):
     def __init__(self, course):
         self.course = course
@@ -57,7 +57,3 @@ def course_related(person, course):
     if not person.has_components('courses'):
         return False
     return course.name in person.courses
-
-@event.handler('course')
-def course_pass_time(_):
-    day.tick()

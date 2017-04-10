@@ -36,3 +36,7 @@ def tick():
 
 on_day_end = event.handler('day_end')
 on_time_tick = event.handler('time')
+
+@event.handler('tick')
+def tick_handler(_):
+    tick()

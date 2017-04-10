@@ -37,7 +37,7 @@ class Job(Entity):
 def all_jobs(_):
     return True
 
-@event.tags('job')
+@event.tags('job', 'tick')
 class JobEvent(Event):
     def __init__(self, job):
         self.job = job
@@ -58,7 +58,3 @@ class HasJob(str):
 @relations.processor('plan')
 def job_related(person, job):
     return person.job == job.name
-
-@event.handler('job')
-def job_pass_time(_):
-    day.tick()
