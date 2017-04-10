@@ -20,6 +20,8 @@
 
 import copy
 
+from . import entity
+
 class EventHandler(object):
     def __init__(self, f, tags):
         self.f = f
@@ -34,7 +36,7 @@ event_list = []
 def register_event_handler(f, *tags):
     event_handlers.append(EventHandler(f, tags))
 
-def event_handler(*tags):
+def handler(*tags):
     """Decorator, which registers event handler"""
     def wrapper(f):
         register_event_handler(f, *tags)
@@ -64,3 +66,10 @@ def register(cls):
 
 def filter(*tgs):
     return [event for event in event_list if event.tags >= set(tgs)]
+
+@entity.component('event')
+class EventComponent(object):
+    def __init__(self, event):
+        self.event = event
+    def proceed(self, *args, **kwargs):
+        self.event.proceed(*args, **kwargs)

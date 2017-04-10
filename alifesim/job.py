@@ -15,10 +15,10 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-from . import entity
-from . import relations
-from . import name, plan
+from . import entity, event, relations
+from . import name, plan, day
 from .entity import Entity
+from .event import Event
 from .date import WeekTime
 
 @entity.component('payment')
@@ -30,11 +30,17 @@ class Job(Entity):
         'payment',
         'name',
         'weekly',
+        'event',
     }
 
 @entity.entity_filter('payment')
 def all_jobs(_):
     return True
+
+@event.tags('job')
+class JobEvent(Event):
+    def __init__(self, job):
+        self.job = job
 
 def normal_job(name):
     job = Job()
@@ -42,6 +48,7 @@ def normal_job(name):
     job.weekly = {
         WeekTime(d, 0) for d in range(5)
     }
+    job.event = JobEvent(job)
     return job
 
 @entity.component('job')
@@ -51,3 +58,7 @@ class HasJob(str):
 @relations.processor('plan')
 def job_related(person, job):
     return person.job == job.name
+
+@event.handler('job')
+def job_pass_time(_):
+    day.tick()

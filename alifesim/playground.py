@@ -23,7 +23,6 @@ from .player import Player
 from .friends import make_friends
 from .socialize import Socialize
 from .unsocialize import Unsocialize
-from .event import event_handler
 from . import job, courses, items, event, stat
 from . import ui_helpers
 from . import entity
@@ -56,17 +55,17 @@ class EatCake(Socialize):
 class EatCakeAlone(Unsocialize):
     name = "Eat cake alone"
 
-@event_handler('eat_cake')
+@event.handler('eat_cake')
 def eat_cake_screen(event):
     ui_helpers.show_screen('cake')
 
-@event_handler('eat_cake')
+@event.handler('eat_cake')
 def eat_cake_special(event):
     print(event.people)
     if random() < 0.5:
         ui_helpers.show_screen('cake_special', event.people[0])
 
-@event_handler('eat_cake')
+@event.handler('eat_cake')
 def eat_cake_satiation(event):
     for person in event.people:
         person.satiation += 1

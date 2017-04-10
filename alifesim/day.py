@@ -34,5 +34,5 @@ def next_day():
 def tick():
     TimeTick().proceed()
 
-on_day_end = event.event_handler('day_end')
-on_time_tick = event.event_handler('time')
+on_day_end = event.handler('day_end')
+on_time_tick = event.handler('time')

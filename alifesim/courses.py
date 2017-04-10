@@ -15,7 +15,9 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-from . import entity, relations
+from . import entity, relations, event
+from . import day
+from .event import Event
 from .date import WeekTime
 
 @entity.component('course_payment')
@@ -27,12 +29,19 @@ class Course(entity.Entity):
         'course_payment',
         'name',
         'weekly',
+        'event',
     }
+
+@event.tags('course')
+class CourseEvent(Event):
+    def __init__(self, course):
+        self.course = course
 
 def evening_course(name, day):
     course = Course()
     course.name = name
     course.weekly.add(WeekTime(day, 1))
+    course.event = CourseEvent(course)
     return course
 
 @entity.entity_filter('course_payment')
@@ -48,3 +57,7 @@ def course_related(person, course):
     if not person.has_components('courses'):
         return False
     return course.name in person.courses
+
+@event.handler('course')
+def course_pass_time(_):
+    day.tick()
