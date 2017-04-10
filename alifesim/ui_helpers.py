@@ -30,32 +30,29 @@ class Selection(list):
     def ready(self):
         return self.min <= len(self) <= self.max
 
-selection = None
-selection_processor = None
+class SelectionManager(object):
+    def __init__(self):
+        self.selection = None
+        self.selection_processor = None
+    def new(self, min, max):
+        self.selection = Selection(min, max)
+        return self.selection
+    def can_select(self):
+        return self.selection is not None and self.selection_processor
+    def select(self, what):
+        if what not in self.selection:
+            self.selection.append(what)
+        print(self.selection)
+    def deselect(self, what):
+        if what in self.selection:
+            self.selection.remove(what)
+    def set_processor(self, f):
+        self.selection_processor = f
+        # return ??
+    def process(self):
+        self.selection_processor(*self.selection)
 
-def new_selection(min_, max_):
-    global selection
-    selection = Selection(min_, max_)
-    return selection
-
-def can_select():
-    return selection is not None
-
-def select(what):
-    if what not in selection:
-        selection.append(what)
-
-def deselect(what):
-    if what in selection:
-        selection.remove(what)
-
-def set_selection_processor(f):
-    global selection_processor
-    selection_processor = f
-    # return ??
-
-def process_selection():
-    selection_processor(*selection)
+selection_manager = SelectionManager()
 
 def show_screen(name, *args, **kwargs):
     """Show given screen with args.
