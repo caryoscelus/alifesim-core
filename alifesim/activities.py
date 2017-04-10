@@ -18,9 +18,10 @@
 """Activities
 """
 
-from .event import Event
+from . import event
 
-class Activity(Event):
+@event.tags('tick')
+class Activity(event.Event):
     """Base class for all activities"""
     @classmethod
     def make_and_run(cls):
