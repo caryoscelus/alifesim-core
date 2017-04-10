@@ -15,13 +15,15 @@
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-"""Activities
+"""Unsocial (single) activities
 """
 
-from .event import Event
+from . import event
+from .activities import Activity
 
-class Activity(Event):
-    """Base class for all activities"""
-    @classmethod
-    def make_and_run(cls):
-        return cls().proceed()
+@event.tags('unsocialize')
+class Unsocialize(Activity):
+    pass
+
+def all():
+    return event.filter('unsocialize')

@@ -19,18 +19,19 @@
 """
 
 from .person import Person
+from .player import Player
 from .friends import make_friends
 from .socialize import Socialize
+from .unsocialize import Unsocialize
 from .event import event_handler
-from . import job, courses, items, event
+from . import job, courses, items, event, stat
 from . import ui_helpers
 from . import entity
 from random import random
 
-@entity.component('satiation')
-class satiation(float):
-    pass
+stat.register_stat('satiation')
 Person.components.add('satiation')
+Player.components.add('satiation')
 
 def setup_friends(player):
     player.name = 'Mee Mines'
@@ -49,6 +50,11 @@ class EatCake(Socialize):
     name = "Eat Cake"
     people_min = 1
     people_max = 3
+
+@event.register
+@event.tags('eat_cake_alone')
+class EatCakeAlone(Unsocialize):
+    name = "Eat cake alone"
 
 @event_handler('eat_cake')
 def eat_cake_screen(event):
