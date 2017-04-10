@@ -21,8 +21,8 @@
 from .person import Person
 from .friends import make_friends
 from .socialize import Socialize
-from .event import event_tags, event_handler
-from . import job, courses, items
+from .event import event_handler
+from . import job, courses, items, event
 from . import ui_helpers
 from . import entity
 from random import random
@@ -43,7 +43,8 @@ def setup_friends(player):
         friend.name = name
         make_friends(player, friend)
 
-@event_tags('eat_cake')
+@event.register
+@event.tags('eat_cake')
 class EatCake(Socialize):
     name = "Eat Cake"
     people_min = 1

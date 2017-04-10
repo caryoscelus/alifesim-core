@@ -18,8 +18,10 @@
 """Social activities
 """
 
-from .activity import Activity
+from . import event
+from .activities import Activity
 
+@event.tags('socialize')
 class Socialize(Activity):
     """Base class for social activities"""
     @classmethod
@@ -28,3 +30,6 @@ class Socialize(Activity):
         self.proceed()
     def __init__(self, *people):
         self.people = people
+
+def all():
+    return event.filter('socialize')

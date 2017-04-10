@@ -29,6 +29,7 @@ class EventHandler(object):
             self.f(entity)
 
 event_handlers = []
+event_list = []
 
 def register_event_handler(f, *tags):
     event_handlers.append(EventHandler(f, tags))
@@ -47,9 +48,19 @@ class Event(object):
         for handler in event_handlers:
             handler.process(self)
 
-def event_tags(*tags):
+def add_tags(cls, *tgs):
+    cls.tags = copy.copy(cls.tags)
+    cls.tags.update(tgs)
+
+def tags(*tgs):
     def wrapper(cls):
-        cls.tags = copy.copy(cls.tags)
-        cls.tags.update(tags)
+        add_tags(cls, *tgs)
         return cls
     return wrapper
+
+def register(cls):
+    event_list.append(cls)
+    return cls
+
+def filter(*tgs):
+    return [event for event in event_list if event.tags >= set(tgs)]

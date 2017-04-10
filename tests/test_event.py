@@ -18,12 +18,13 @@
 """Test event system
 """
 
+from alifesim import event
 from alifesim.event import *
 
 def test_tags():
     class Foo(Event):
         tags = {'foo'}
-    @event_tags('bar')
+    @event.tags('bar')
     class Bar(Foo):
         pass
     assert Bar.tags == {'foo', 'bar'}

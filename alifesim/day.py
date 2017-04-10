@@ -20,11 +20,11 @@
 
 from . import event
 
-@event.event_tags('day_end')
+@event.tags('day_end')
 class DayEnd(event.Event):
     pass
 
-@event.event_tags('time')
+@event.tags('time')
 class TimeTick(event.Event):
     pass
 
